@@ -23,7 +23,9 @@ dignified stance,
 arms relaxed at sides,
 hands gently open,
 neutral hand gesture,
-head slightly tilted,
+face forward,
+looking at viewer,
+head aligned with body
 
 traditional kimono,
 soft pastel green kimono,
