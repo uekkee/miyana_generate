@@ -32,7 +32,10 @@ fingers relaxed,
 (no hand gestures:1.1)
 face forward,
 looking at viewer,
-head aligned with body
+head aligned with body,
+legs together,
+straight legs,
+feet together,
 
 traditional kimono,
 soft pastel green kimono,
