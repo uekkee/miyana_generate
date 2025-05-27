@@ -91,7 +91,6 @@ light blush,
 serene expression,
 soft closed mouth smile,
 eyes relaxed,
-gaze forward or slightly downward,
 
 ((traditional sakura kanzashi:1.2)),
 floral hair ornament,
