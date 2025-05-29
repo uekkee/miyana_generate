@@ -50,6 +50,7 @@ miyana プロジェクトは、理想の女性キャラクター「雅凪（み�
 ### 属性マップの場所
 
 - [ポジティブプロンプト](src/positive_attribute_map.md)
+- [ネガティブプロンプト](src/negative_attribute_map.md)
 
 ### コンセプト
 
