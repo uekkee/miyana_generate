@@ -9,8 +9,6 @@
 | 高解像度     | absurdres       | o     | o    | o         | o        |
 | 最新         | newest          | o     | o    | o         | o        |
 
----
-
 ### 👤 キャラクター属性
 
 | 日本語名           | タグ名                | front | back | left-side | close-up |
@@ -25,8 +23,6 @@
 | 優雅               | graceful              | o     | o    | o         | o        |
 | 落ち着いた雰囲気   | calm aura             | o     | o    | o         | o        |
 | 癒しの存在         | healing presence      | o     | o    | o         | o        |
-
----
 
 ### 🧍‍♀️ ポーズ・構図
 
@@ -53,8 +49,6 @@
 | まっすぐな脚             | straight legs          | o     | o    | o         | x        |
 | 足を揃えている           | feet together          | o     | o    | o         | x        |
 
----
-
 ### 👘 衣装・着物
 
 | 日本語名                             | タグ名                             | front | back | left-side | close-up |
@@ -72,8 +66,6 @@
 | 統一された衣装の色                   | unified outfit color               | o     | o    | o         | o        |
 | スカートなし                         | skirtless                          | o     | o    | o         | o        |
 
----
-
 ### 🧵 エプロン
 
 | 日本語名                         | タグ名                                  | front | back | left-side | close-up |
@@ -83,8 +75,6 @@
 | 帯から独立したエプロン           | apron separate from obi                 | o     | o    | o         | o        |
 | 着物の上にエプロン               | apron over kimono                       | o     | o    | o         | o        |
 | エプロンの色は赤ではない         | apron color is not red                  | 1.3   | 1.3  | 1.3       | 1.3      |
-
----
 
 ### 💇‍♀️ 髪型・髪色
 
@@ -100,8 +90,6 @@
 | 右側の顔を縁取る髪         | face-framing strands right | o     | o    | o         | o        |
 | 右に流れた髪               | hair swept right           |       |      |           |          |
 
----
-
 ### 💇‍♀️ 髪型・髪色（続き）
 
 | 日本語名                 | タグ名               | front | back | left-side | close-up |
@@ -112,8 +100,6 @@
 | 編み込みお団子           | braided bun          | o     | o    | o         | o        |
 | きちんと整った髪         | neatly arranged hair | o     | o    | o         | o        |
 | うなじが見えている       | visible nape         | o     | o    | o         | o        |
-
----
 
 ### 👁️ 目元・顔のディテール
 
@@ -130,8 +116,6 @@
 | 左目の下のほくろ             | mole under left eye        | o     | x    | o         | o        |
 | 左目の下のビューティーマーク | beauty mark under left eye | o     | x    | o         | o        |
 
----
-
 ### 😊 表情・感情
 
 | 日本語名               | タグ名                  | front | back | left-side | close-up |
@@ -144,8 +128,6 @@
 | 口を閉じた柔らかい微笑 | soft closed mouth smile | o     | x    | o         | o        |
 | 目元が穏やか           | eyes relaxed            | o     | x    | o         | o        |
 
----
-
 ### 🎀 装飾品（かんざし）
 
 | 日本語名             | タグ名                      | front | back | left-side | close-up |
@@ -156,8 +138,6 @@
 | ピンクの花の髪飾り   | pink flower hair ornament   | o     | x    | o         | o        |
 | 小さな花のアクセサリ | small flower accessory      | o     | x    | o         | o        |
 | 左側の髪の花         | left side hair flower       | o     | x    | o         | o        |
-
----
 
 ### 👘 袖の特徴
 
@@ -170,8 +150,6 @@
 | 色付きの袖先                   | colored sleeve tips             | o     | o    | o         | o        |
 | やわらかい布のしわ             | soft fabric folds               | o     | o    | o         | o        |
 
----
-
 ### 👣 足元・履物
 
 | 日本語名           | タグ名                 | front | back | left-side | close-up |
@@ -183,8 +161,6 @@
 | 帯と鼻緒の色が調和 | coordinated footwear   | o     | o    | o         | x        |
 | 帯と鼻緒が一致     | matching obi and hanao | o     | o    | o         | x        |
 
----
-
 ### 🏙️ 背景・構図
 
 | 日本語名       | タグ名                      | front | back | left-side | close-up |
@@ -193,5 +169,3 @@
 | 無地の背景     | solid background            | o     | o    | o         | o        |
 | スタジオの照明 | studio lighting             | o     | o    | o         | o        |
 | 中央構図       | centered composition        | o     | o    | o         | o        |
-
----
