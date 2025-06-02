@@ -41,6 +41,22 @@
 | 誘うような描写 | seductive  |   o   |
 | エロティック   | erotic     |   o   |
 | 服の乱れ       | disheveled |   o   |
+| 胸元の開き     | open chest |   o   |
+
+### 画質・解像度破綻
+
+| 日本語名 | タグ名 | front |
+| -------- | ------ | :---: |
+| ぼやけ   | blurry |   o   |
+| 低解像度 | lowres |   o   |
+
+### 髪型破綻
+
+| 日本語名     | タグ名         | front |
+| ------------ | -------------- | :---: |
+| 乱れた髪     | messy hair     |   o   |
+| 割れた前髪   | split bangs    |   o   |
+| 風で乱れた髪 | windblown hair |   o   |
 
 ### 顔・目の異常
 
