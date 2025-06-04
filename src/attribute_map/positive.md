@@ -39,22 +39,31 @@
 
 ### 髪型・髪色
 
-| 日本語名                   | タグ名                | front | back | front_right_closeup |
-| -------------------------- | --------------------- | ----- | ---- | ------------------- |
-| ミルキーミントグリーンの髪 | milky mint green hair | 1.3   | 1.3  | 1.3                 |
-| 淡いミント色               | pale mint shade       | o     | o    | o                   |
-| 半透明の髪                 | semi-translucent hair | o     | o    | o                   |
-| 分かれていない前髪         | non-split bangs       | o     | x    | o                   |
-| 中間長さの前髪             | straight medium bangs | o     | x    | o                   |
-| センターヘビーな前髪       | center-heavy bangs    | o     | x    | o                   |
-| 右側サイドヘア             | soft side hair        | o     | o    | o                   |
-| 顔を縁取る毛               | face-framing strands  | o     | o    | o                   |
-| 自然なサイドロック         | natural side lock     | o     | o    | o                   |
-| 後ろで結んだ髪             | hair tied back        | o     | o    | o                   |
-| 飾り付き三つ編みお団子     | decorated braid bun   | o     | o    | o                   |
-| 三つ編み団子               | braided bun           | o     | o    | o                   |
-| きちんと整えた髪           | neatly arranged hair  | o     | o    | o                   |
-| うなじが見える             | visible nape          | o     | o    | o                   |
+| 日本語名                   | タグ名                     | front | back | front_right_closeup |
+| -------------------------- | -------------------------- | ----- | ---- | ------------------- |
+| ミルキーミントグリーンの髪 | milky mint green hair      | 1.3   | 1.3  | 1.3                 |
+| 淡いミント色               | pale mint shade            | o     | o    | o                   |
+| 半透明の髪                 | semi-translucent hair      | o     | o    | o                   |
+| セミロングヘア             | semi long hair             | o     | o    | o                   |
+| 肩までの長さ               | shoulder length            | o     | o    | o                   |
+| ミディアム長さヘア         | medium length hair         | o     | o    | o                   |
+| 中短長さヘア               | short to medium length     | o     | o    | o                   |
+| 肩下わずか                 | just below shoulder length | o     | o    | o                   |
+| ストレートヘア             | straight hair              | o     | o    | o                   |
+| 滑らかな髪                 | smooth hair                | o     | o    | o                   |
+| 絹のような髪               | silky hair                 | o     | o    | o                   |
+| 柔らかい髪                 | soft hair                  | o     | o    | o                   |
+| わずかなボリューム         | slight volume hair         | o     | o    | o                   |
+| 自然なボリューム           | natural volume             | o     | o    | o                   |
+| 自然な髪流れ               | natural hair flow          | o     | o    | o                   |
+| 滑らかなレイヤー           | smooth layered hair        | o     | o    | o                   |
+| 柔らかいレイヤー           | soft layered hair          | o     | o    | o                   |
+| わずかな内巻き             | slight inward curl         | o     | o    | o                   |
+| 内巻き                     | inward curl                | o     | o    | o                   |
+| 丸まった毛先               | rounded ends               | o     | o    | o                   |
+| 分かれていない前髪         | non-split bangs            | o     | x    | o                   |
+| 中間長さの前髪             | straight medium bangs      | o     | x    | o                   |
+| センターヘビーな前髪       | center-heavy bangs         | o     | x    | o                   |
 
 ### 目・表情
 
@@ -70,17 +79,6 @@
 | 瞳に模様なし       | no pattern in eyes         | 1.3   | 1.3  | 1.3                 |
 | 左目下のほくろ     | mole under left eye        | o     | o    | o                   |
 | 美人ぼくろ         | beauty mark under left eye | o     | o    | o                   |
-
-### 髪飾り
-
-| 日本語名       | タグ名                      | front | back | front_right_closeup |
-| -------------- | --------------------------- | ----- | ---- | ------------------- |
-| 伝統的な桜簪   | traditional sakura kanzashi | 1.2   | 1.2  | 1.2                 |
-| 花の髪飾り     | floral hair ornament        | o     | o    | o                   |
-| 髪飾りが見える | visible hair accessory      | o     | o    | o                   |
-| ピンクの花飾り | pink flower hair ornament   | o     | o    | o                   |
-| 小さな花飾り   | small flower accessory      | o     | o    | o                   |
-| 左側の花飾り   | left side hair flower       | o     | o    | o                   |
 
 ### 足元
 
