@@ -23,6 +23,9 @@
 | ヘッドバンド           | headband                | o     | o    | o                   |
 | レースヘッドバンド     | lace headband           | o     | o    | o                   |
 | フリルヘアバンド       | frilly hairband         | o     | o    | o                   |
+| ショートヘア           | short hair              | o     | o    | o                   |
+| ボブカット             | bob cut                 | o     | o    | o                   |
+| 顎までの長さの髪       | chin length hair        | o     | o    | o                   |
 
 ### 顔・目・表情
 
