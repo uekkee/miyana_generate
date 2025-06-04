@@ -1,5 +1,9 @@
 # Change logs
 
+## v3.2.2
+
+- GHA による「スタイル」x「構図」の全プロンプト生成スクリプトを追加
+
 ## v3.2.1
 
 - チェックポイントを `WAI-NSFW-illustrious-SDXL` に回帰
