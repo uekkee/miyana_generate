@@ -44,10 +44,10 @@
 | ミルキーミントグリーンの髪 | milky mint green hair      | 1.3   | 1.3  | 1.3                 |
 | 淡いミント色               | pale mint shade            | o     | o    | o                   |
 | 半透明の髪                 | semi-translucent hair      | o     | o    | o                   |
-| セミロングヘア             | semi long hair             | o     | o    | o                   |
-| 肩までの長さ               | shoulder length            | o     | o    | o                   |
-| ミディアム長さヘア         | medium length hair         | o     | o    | o                   |
-| 中短長さヘア               | short to medium length     | o     | o    | o                   |
+| セミロングヘア             | semi long hair             | 1.4   | 1.4  | 1.4                 |
+| 肩までの長さ               | shoulder length            | 1.4   | 1.4  | 1.4                 |
+| ミディアム長さヘア         | medium length hair         | 1.3   | 1.3  | 1.3                 |
+| 中短長さヘア               | short to medium length     | 1.3   | 1.3  | 1.3                 |
 | 肩下わずか                 | just below shoulder length | o     | o    | o                   |
 | ストレートヘア             | straight hair              | o     | o    | o                   |
 | 滑らかな髪                 | smooth hair                | o     | o    | o                   |
