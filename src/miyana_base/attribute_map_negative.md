@@ -26,6 +26,11 @@
 | ショートヘア           | short hair              | o     | o    | o                   |
 | ボブカット             | bob cut                 | o     | o    | o                   |
 | 顎までの長さの髪       | chin length hair        | o     | o    | o                   |
+| ロングヘア             | long hair               | o     | o    | o                   |
+| とてもロングヘア       | very long hair          | o     | o    | o                   |
+| 極端なロングヘア       | extremely long hair     | o     | o    | o                   |
+| 編み込み               | braid                   | o     | o    | o                   |
+| 編み込み髪型           | braided hair            | o     | o    | o                   |
 
 ### 顔・目・表情
 
