@@ -1,14 +1,5 @@
 require 'fileutils'
 
-# 入力パス定義
-STYLE_MAP_POS = 'src/style_map/positive.md'
-STYLE_MAP_NEG = 'src/style_map/negative.md'
-ATTR_MAP_POS = 'src/attribute_map/positive.md'
-ATTR_MAP_NEG = 'src/attribute_map/negative.md'
-
-# 出力ディレクトリ
-OUTPUT_DIR = 'prompts_output'
-
 # Markdownをパースしてマップ化
 class MapParser
   attr_reader :headers
@@ -51,7 +42,10 @@ end
 
 # 出力生成
 class PromptGenerator
-  def initialize(style_pos, style_neg, attr_pos, attr_neg, styles, compositions)
+  OUTPUT_DIR = 'prompts_output' 
+
+  def initialize(lora_name:, style_pos:, style_neg:, attr_pos:, attr_neg:, styles:, compositions:)
+    @lora_name = lora_name
     @style_pos = style_pos
     @style_neg = style_neg
     @attr_pos = attr_pos
@@ -63,7 +57,7 @@ class PromptGenerator
   def generate
     @styles.each do |style|
       @compositions.each do |comp|
-        outdir = File.join(OUTPUT_DIR, "#{style}_#{comp}")
+        outdir = File.join(OUTPUT_DIR, @lora_name, "#{style}_#{comp}")
         FileUtils.mkdir_p(outdir)
 
         File.write(File.join(outdir, 'positive_prompt.txt'), generate_prompt(@style_pos, @attr_pos, style, comp))
@@ -95,19 +89,44 @@ class PromptGenerator
   end
 end
 
-# メイン処理
-style_pos_parser = MapParser.new(STYLE_MAP_POS)
-style_pos = style_pos_parser.parse
-styles = style_pos_parser.headers
+class LoraPromptGenerator
+  STYLE_MAP_POSITIVE_FILENAME = 'style_map_positive.md'
+  STYLE_MAP_NEGATIVE_FILENAME = 'style_map_negative.md'
+  ATTR_MAP_POSITIVE_FILENAME = 'attribute_map_positive.md'
+  ATTR_MAP_NEGATIVE_FILENAME = 'attribute_map_negative.md'
 
-style_neg_parser = MapParser.new(STYLE_MAP_NEG)
-style_neg = style_neg_parser.parse
+  def initialize(lora_name:)
+    @lora_name = lora_name
+  end 
 
-attr_pos_parser = MapParser.new(ATTR_MAP_POS)
-attr_pos = attr_pos_parser.parse
-compositions = attr_pos_parser.headers
+  def generate
+    style_pos_parser = MapParser.new(map_file_path(filename: STYLE_MAP_POSITIVE_FILENAME))
+    style_pos = style_pos_parser.parse
+    styles = style_pos_parser.headers
 
-attr_neg_parser = MapParser.new(ATTR_MAP_NEG)
-attr_neg = attr_neg_parser.parse
+    style_neg_parser = MapParser.new(map_file_path(filename: STYLE_MAP_NEGATIVE_FILENAME))
+    style_neg = style_neg_parser.parse
 
-PromptGenerator.new(style_pos, style_neg, attr_pos, attr_neg, styles, compositions).generate
+    attr_pos_parser = MapParser.new(map_file_path(filename: ATTR_MAP_POSITIVE_FILENAME))
+    attr_pos = attr_pos_parser.parse
+    compositions = attr_pos_parser.headers
+
+    attr_neg_parser = MapParser.new(map_file_path(filename: ATTR_MAP_NEGATIVE_FILENAME))
+    attr_neg = attr_neg_parser.parse
+
+    PromptGenerator.new(lora_name: @lora_name, style_pos:, style_neg:, attr_pos:, attr_neg:, styles:, compositions:).generate
+  end
+
+  private
+
+  def source_dir
+    @lora_root_dir = File.join('src', @lora_name)
+  end
+
+  def map_file_path(filename:)
+    File.join(source_dir, filename)
+  end 
+end  
+
+# main
+LoraPromptGenerator.new(lora_name: 'miyana_base').generate
