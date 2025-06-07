@@ -1,0 +1,17 @@
+inherit_from: .rubocop_todo.yml
+
+# Rubyのターゲットバージョン
+AllCops:
+  TargetRubyVersion: 3.4
+
+  # New cops（新しいCop）をデフォルトで有効化
+  NewCops: enable
+
+  # 特定ディレクトリのみ有効化（例えば app/ 配下のみチェックしたい場合）
+  Include:
+    - "scripts/**/*.rb"
+
+# ここから個別Copの設定を随時追加可能
+# 例: インデント幅変更したい場合
+Layout/IndentationWidth:
+  Width: 2
