@@ -335,3 +335,39 @@ see: [workflow](.github/workflows/generate_prompts.yml)
 
 - スタイル・属性マップの指定により出力されたプロンプト(GHA で作成されたものを添付)
 - 実際に生成された画像数点
+
+## 7. 開発補助スクリプト
+
+ruby で書かれている。必要な gem は bundler で管理している。
+
+環境設定は自明なので割愛する。
+
+### スクリプトの種類
+
+- [generate_prompts](./scripts/generate_prompts.rb)
+  - スタイルマップ / 属性マップから 「スタイル」x「構図」の組み合わせの全スクリプトを出力
+- [simple_prompt_runner.rb](./scripts/simple_prompt_runner.rb)
+  - CompyUI API に接続し、任意のプロンプトファイルから画像生成をバッチ実行する
+  - 今のところは作者のローカル環境にロックインした内容。
+
+### generate_prompts
+
+実行
+
+```console
+bundle exec ruby scripts/generate_prompts.rb
+```
+
+### simple_prompt_runner
+
+実行（デフォルトオプション）
+
+```console
+bundle exec ruby scripts/simple_prompt_runner.rb
+```
+
+起動オプションのヘルプ
+
+```
+bundle exec ruby scripts/simple_prompt_runner.rb --help
+```
