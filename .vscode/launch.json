@@ -1,0 +1,22 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Current File with rdbg",
+      "type": "ruby_lsp",
+      "request": "launch",
+      "program": "ruby -E UTF-8 ${file}",
+      "env": {}
+    },
+    {
+      "name": "Debug simple_prompt_runner with specified arguments",
+      "type": "ruby_lsp",
+      "request": "launch",
+      "program": "ruby -E UTF-8 scripts/simple_prompt_runner.rb --batch-size 1",
+      "env": {}
+    }
+  ]
+}
