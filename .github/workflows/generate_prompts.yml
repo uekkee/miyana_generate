@@ -2,6 +2,9 @@ name: Generate Prompts
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   generate-prompts:
@@ -14,15 +17,11 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4"
-
-      - name: Install dependencies (if any)
-        run: |
-          echo "No extra dependencies."
+          bundler-cache: true
 
       - name: Run prompt generator
         run: |
-          ruby scripts/generate_prompts.rb
+          bundle exec ruby scripts/generate_prompts.rb
 
       - name: Archive generated prompts
         run: |
