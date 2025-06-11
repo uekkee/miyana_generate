@@ -32,5 +32,5 @@
 
 | 日本語名       | タグ名                      | default |
 | -------------- | --------------------------- | ------- |
-| 明るい灰色背景 | plain light gray background | o       |
-| 単純背景       | solid background            | o       |
+| 明るい灰色背景 | plain light gray background | 1.1     |
+| 単純背景       | solid background            | 1.1     |

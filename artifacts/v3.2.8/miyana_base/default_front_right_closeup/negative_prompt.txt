@@ -1,0 +1,22 @@
+jpeg artifacts,
+sketch,
+
+windblown hair,
+long hair,
+very long hair,
+extremely long hair,
+
+spiral eyes,
+patterned eyes,
+baby face,
+loli,
+toddler,
+cartoonish face,
+
+multiple girls,
+multiple views,
+
+(nsfw:1.5),
+(cleavage:1.5),
+(bare shoulders:1.5),
+(open clothes:1.5),
