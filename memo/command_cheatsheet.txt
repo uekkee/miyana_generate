@@ -1,0 +1,20 @@
+## 正面全身ためす
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_front/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_front/negative_prompt.txt --batch-size 1 --width 768 --height 1344 --loop 100
+
+## 正面全身大量
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_front/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_front/negative_prompt.txt --batch-size 10 --width 768 --height 1344 --loop 100
+
+## 背面全身ためす
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_back/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_back/negative_prompt.txt --batch-size 1 --width 768 --height 1344 --loop 100
+
+## 背面全身大量
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_back/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_back/negative_prompt.txt --batch-size 10 --width 768 --height 1344 --loop 100
+
+## 正面右クローズアップ試す
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_front_right_closeup/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_front_right_closeup/negative_prompt.txt --batch-size 1 --width 1024 --height 1024 --loop 100
+
+## 正面右クローズアップ大量
+bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_output/miyana_base/default_front_right_closeup/positive_prompt.txt --negative-file-path ./prompts_output/miyana_base/default_front_right_closeup/negative_prompt.txt --batch-size 10 --width 1024 --height 1024 --loop 100
+
+## プロンプトつくる
+bundle exec ruby scripts/generate_prompts.rb

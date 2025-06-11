@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fileutils'
+require 'active_support/all'
 
 # Markdownをパースしてマップ化
 class MapParser
@@ -62,13 +63,18 @@ class PromptGenerator
         outdir = File.join(OUTPUT_DIR, @lora_name, "#{style}_#{comp}")
         FileUtils.mkdir_p(outdir)
 
-        File.write(File.join(outdir, 'positive_prompt.txt'), generate_prompt(@style_pos, @attr_pos, style, comp))
-        File.write(File.join(outdir, 'negative_prompt.txt'), generate_prompt(@style_neg, @attr_neg, style, comp))
+        positive_prompt_blocks = generate_prompt_blocks(@style_pos, @attr_pos, style, comp)
+        negative_prompt_blocks = generate_prompt_blocks(@style_neg, @attr_neg, style, comp)
+
+        File.write(File.join(outdir, 'positive_prompt.txt'), generate_prompt_string(positive_prompt_blocks))
+        File.write(File.join(outdir, 'negative_prompt.txt'), generate_prompt_string(negative_prompt_blocks))
+
+        log_tag_counts(positive_prompt_blocks:, negative_prompt_blocks:, style:, comp:)
       end
     end
   end
 
-  def generate_prompt(style_map, attr_map, style, comp)
+  def generate_prompt_blocks(style_map, attr_map, style, comp)
     blocks = []
 
     style_map.each_value do |tags|
@@ -81,7 +87,26 @@ class PromptGenerator
       blocks << lines.join("\n") unless lines.empty?
     end
 
-    "#{blocks.reject(&:empty?).join("\n\n")}\n"
+    blocks
+  end
+
+  def generate_prompt_string(prompt_blocks)
+    "#{prompt_blocks.reject(&:empty?).join("\n\n")}\n"
+  end
+
+  def count_tags(prompt_blocks)
+    prompt_blocks.reduce(0) do |count, block|
+      count + block.count(',')
+    end
+  end
+
+  def log_tag_counts(positive_prompt_blocks:, negative_prompt_blocks:, style:, comp:)
+    positive_tag_count = count_tags(positive_prompt_blocks)
+    negative_tag_count = count_tags(negative_prompt_blocks)
+    total_tag_count = positive_tag_count + negative_tag_count
+    header = "Lora: #{@lora_name}, Style: #{style}, Composition: #{comp}"
+
+    puts "[#{header}] -> total: #{total_tag_count} (positive: #{positive_tag_count}, negative: #{negative_tag_count})"
   end
 
   def format_tag(tag, value)
