@@ -349,6 +349,8 @@ ruby で書かれている。必要な gem は bundler で管理している。
 - [simple_prompt_runner.rb](./scripts/simple_prompt_runner.rb)
   - CompyUI API に接続し、任意のプロンプトファイルから画像生成をバッチ実行する
   - 今のところは作者のローカル環境にロックインした内容。
+- [generate_annotation_text_files.rb](./scripts/generate_annotation_text_files.rb)
+  - 特定の画像ファイルに対し、一括で同じ内容のアノテーションテキストファイルを自動生成する
 
 ### generate_prompts
 
@@ -370,4 +372,12 @@ bundle exec ruby scripts/simple_prompt_runner.rb
 
 ```
 bundle exec ruby scripts/simple_prompt_runner.rb --help
+```
+
+### generate_annotation_text_files
+
+起動オプションのヘルプ
+
+```
+bundle exec ruby scripts/generate_annotation_text_files.rb --help
 ```
