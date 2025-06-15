@@ -5,6 +5,8 @@ require 'active_support/all'
 require 'active_model'
 require 'fileutils'
 
+require_relative 'comfyui/workflow_json_builder'
+
 ENDPOINT_BASE_URL = 'http://192.168.11.7:8188'
 COMFYUI_OUTPUT_DIR = '/Volumes/miyana'
 IMAGES_OUTPUT_BASE_DIR = './images_output'
@@ -38,7 +40,11 @@ class PromptAsyncExecutor # rubocop:disable Metrics/ClassLength
     File.read(file_path).split.join(' ').gsub('"', '\"')
   end
 
-  def request_json # rubocop:disable Metrics/MethodLength
+  def request_json
+    { prompt: Comfyui::WorkflowJsonBuilder.new.base_json }
+  end
+
+  def old_request_json # rubocop:disable Metrics/MethodLength
     JSON.parse(<<~JSON)
       {
           "prompt": {
