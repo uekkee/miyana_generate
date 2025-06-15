@@ -1,5 +1,9 @@
 # Change logs
 
+## v3.2.11
+
+- miyanabase, miyanakimono LoRA 作成の過程で得た知見をドキュメント化
+
 ## v3.2.10
 
 - アノテーションテキスト生成スクリプトの追加

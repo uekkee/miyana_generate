@@ -20,4 +20,6 @@ bundle exec ruby scripts/simple_prompt_runner.rb --positive-file-path ./prompts_
 bundle exec ruby scripts/generate_prompts.rb
 
 ## ポジティブプロンプトファイルからアノテーションテキスト作る
-bundle exec ruby scripts/generate_annotation_text_files.rb --trigger-tag miyana_base --images-dir tmp/miyana_base_lora_image_candidates_v3.2.9/front --positive-prompt-path ./artifacts/v3.2.8/miyana_base/default_front/positive_prompt.txt
+bundle exec ruby scripts/generate_annotation_text_files.rb --trigger-tag "miyanabase" --images-dir /Volumes/miyana/miyana_base_lora_image_candidates_v3.2.9/front --positive-prompt-path ./prompts_output/miyana_base/default_front/positive_prompt.txt &
+bundle exec ruby scripts/generate_annotation_text_files.rb --trigger-tag "miyanabase" --images-dir /Volumes/miyana/miyana_base_lora_image_candidates_v3.2.9/back --positive-prompt-path ./prompts_output/miyana_base/default_back/positive_prompt.txt &
+bundle exec ruby scripts/generate_annotation_text_files.rb --trigger-tag "miyanabase" --images-dir /Volumes/miyana/miyana_base_lora_image_candidates_v3.2.9/closeup --positive-prompt-path ./prompts_output/miyana_base/default_front_right_closeup/positive_prompt.txt
