@@ -3,8 +3,7 @@ module Comfyui
     def base_json
       {
         '3': ksampler_json,
-        '4': { inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' }, class_type: 'CheckpointLoaderSimple',
-               _meta: { title: 'Load Checkpoint' } },
+        '4': checkpoint_json,
         '5': { inputs: { width: 1376, height: 1024, batch_size: 1 }, class_type: 'EmptyLatentImage',
                _meta: { title: 'Empty Latent Image' } },
         '6': {
@@ -40,6 +39,14 @@ module Comfyui
         },
         class_type: 'KSampler',
         _meta: { title: 'KSampler' }
+      }
+    end
+
+    def checkpoint_json
+      {
+        inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' },
+        class_type: 'CheckpointLoaderSimple',
+        _meta: { title: 'Load Checkpoint' }
       }
     end
   end
