@@ -13,6 +13,16 @@ module Comfyui
     end
 
     def base_json
+      nodes = build_nodes
+
+      {}.tap do |json|
+        nodes.flatten.compact.each { |node| json[:"#{node.index}"] = node.json }
+      end
+    end
+
+    private
+
+    def build_nodes
       nodes = []
       nodes << build_checkpoint_node
       nodes << build_latent_image_node(width: 1376, height: 1024, batch_size: 1)
@@ -31,12 +41,8 @@ module Comfyui
       nodes << build_vae_decode_node(sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
       nodes << build_save_image_node(filename_prefix: 'miyana/results', image_index: vae_decode_node.index)
 
-      {}.tap do |json|
-        nodes.flatten.compact.each { |node| json[:"#{node.index}"] = node.json }
-      end
+      nodes
     end
-
-    private
 
     def assign_node(json, model_node: false)
       @current_node_index += 1
