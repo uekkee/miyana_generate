@@ -20,24 +20,14 @@ module Comfyui
                                          'miyanakimono_20250615_0702.safetensors'],
                             first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
       build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
-                                 clip_index: 14) # FIXME: clip_index: load_lora_nodes.last.index)
+                                 clip_index: load_lora_nodes.last.index)
       build_ksampler_node(seed: rand(1000..999_999_999),
-                          model_index: 14, # FIXME: model_index: load_lora_nodes.last.index,
-                          positive_index: 6, # FIXME: positive_index: positive_prompt_node.index,
-                          negative_index: 11, # FIXME: negative_index: negative_prompt_node.index,
-                          latent_image_index: 5) # FIXME: latent_image_index: latent_image_node.index)
-      build_vae_decode_node(sample_index: 3, vae_index: 4) # FIMME: sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
-      build_save_image_node(filename_prefix: 'miyana/results', image_index: 8) # FIXME: image_index: vae_decode_node.index
-
-      # FIXME: changing node index will be removed finally
-      latent_image_node.index = 5
-      negative_prompt_node.index = 11
-      load_lora_nodes.first.index = 12
-      load_lora_nodes.last.index = 14
-      positive_prompt_node.index = 6
-      ksampler_node.index = 3
-      vae_decode_node.index = 8
-      save_image_node.index = 9
+                          model_index: load_lora_nodes.last.index,
+                          positive_index: positive_prompt_node.index,
+                          negative_index: negative_prompt_node.index,
+                          latent_image_index: latent_image_node.index)
+      build_vae_decode_node(sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
+      build_save_image_node(filename_prefix: 'miyana/results', image_index: vae_decode_node.index)
 
       {
         "#{ksampler_node.index}": ksampler_node.json,
@@ -136,11 +126,8 @@ module Comfyui
       last_load_lora_node = nil
 
       @load_lora_nodes = lora_names.map do |lora_name|
-        # FIXME: changing node index will be removed finally
-        # model_index = last_load_lora_node ? last_load_lora_node.index : first_model_index
-        # clip_index = last_load_lora_node ? last_load_lora_node.index : first_clip_index
-        model_index = last_load_lora_node ? 12 : first_model_index
-        clip_index = last_load_lora_node ? 12 : first_clip_index
+        model_index = last_load_lora_node ? last_load_lora_node.index : first_model_index
+        clip_index = last_load_lora_node ? last_load_lora_node.index : first_clip_index
 
         last_load_lora_node = assign_node(
           load_lora_json(lora_name:, strength_model: 1, strength_clip: 1, model_index:, clip_index:)
