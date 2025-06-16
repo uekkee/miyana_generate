@@ -12,34 +12,27 @@ module Comfyui
     end
 
     def base_json
-      build_checkpoint_node
-      build_latent_image_node(width: 1376, height: 1024, batch_size: 1)
-      build_negative_prompt_json(text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw',
-                                 clip_index: checkpoint_node.index)
-      build_load_lora_nodes(lora_names: ['miyanabase_wai_part_try_250614_2038.safetensors',
-                                         'miyanakimono_20250615_0702.safetensors'],
-                            first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
-      build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
-                                 clip_index: load_lora_nodes.last.index)
-      build_ksampler_node(seed: rand(1000..999_999_999),
-                          model_index: load_lora_nodes.last.index,
-                          positive_index: positive_prompt_node.index,
-                          negative_index: negative_prompt_node.index,
-                          latent_image_index: latent_image_node.index)
-      build_vae_decode_node(sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
-      build_save_image_node(filename_prefix: 'miyana/results', image_index: vae_decode_node.index)
+      nodes = []
+      nodes << build_checkpoint_node
+      nodes << build_latent_image_node(width: 1376, height: 1024, batch_size: 1)
+      nodes << build_negative_prompt_json(text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw',
+                                          clip_index: checkpoint_node.index)
+      nodes << build_load_lora_nodes(lora_names: ['miyanabase_wai_part_try_250614_2038.safetensors',
+                                                  'miyanakimono_20250615_0702.safetensors'],
+                                     first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
+      nodes << build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
+                                          clip_index: load_lora_nodes.last.index)
+      nodes << build_ksampler_node(seed: rand(1000..999_999_999),
+                                   model_index: load_lora_nodes.last.index,
+                                   positive_index: positive_prompt_node.index,
+                                   negative_index: negative_prompt_node.index,
+                                   latent_image_index: latent_image_node.index)
+      nodes << build_vae_decode_node(sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
+      nodes << build_save_image_node(filename_prefix: 'miyana/results', image_index: vae_decode_node.index)
 
-      {
-        "#{ksampler_node.index}": ksampler_node.json,
-        "#{checkpoint_node.index}": checkpoint_node.json,
-        "#{latent_image_node.index}": latent_image_node.json,
-        "#{positive_prompt_node.index}": positive_prompt_node.json,
-        "#{vae_decode_node.index}": vae_decode_node.json,
-        "#{save_image_node.index}": save_image_node.json,
-        "#{negative_prompt_node.index}": negative_prompt_node.json,
-        "#{load_lora_nodes.first.index}": load_lora_nodes.first.json,
-        "#{load_lora_nodes.last.index}": load_lora_nodes.last.json
-      }
+      {}.tap do |json|
+        nodes.flatten.each { |node| json[:"#{node.index}"] = node.json }
+      end
     end
 
     private
