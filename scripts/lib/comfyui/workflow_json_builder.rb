@@ -3,7 +3,7 @@ module Comfyui
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    attr_reader :checkpoint_node, :negative_prompt_node, :load_lora_nodes
+    attr_reader :checkpoint_node, :negative_prompt_node, :load_lora_nodes, :positive_prompt_node
 
     def initialize
       @current_node_index = 3
@@ -16,17 +16,20 @@ module Comfyui
       build_load_lora_nodes(lora_names: ['miyanabase_wai_part_try_250614_2038.safetensors',
                                          'miyanakimono_20250615_0702.safetensors'],
                             first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
+      build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
+                                 clip_index: 14) # FIXME: clip_index: load_lora_nodes.last.index)
 
       # FIXME: changing node index will be removed finally
       negative_prompt_node.index = 11
       load_lora_nodes.first.index = 12
       load_lora_nodes.last.index = 14
+      positive_prompt_node.index = 6
 
       {
         '3': ksampler_json,
         "#{checkpoint_node.index}": checkpoint_node.json,
         '5': latent_image_json,
-        '6': positive_prompt_json,
+        "#{positive_prompt_node.index}": positive_prompt_node.json,
         '8': vae_decode_json,
         '9': save_image_json,
         "#{negative_prompt_node.index}": negative_prompt_node.json,
@@ -72,15 +75,14 @@ module Comfyui
       }
     end
 
-    def positive_prompt_json
-      {
-        inputs: {
-          text: 'masterpiece,best quality,amazing quality, 1girl, miyanabase, miyanakimono, looking at viewer, walking at beach',
-          clip: ['14', 1]
-        },
-        class_type: 'CLIPTextEncode',
-        _meta: { title: 'CLIP Text Encode (Prompt)' }
-      }
+    def build_positive_prompt_node(text:, clip_index:)
+      @positive_prompt_node = assign_node(
+        {
+          inputs: { text:, clip: [clip_index.to_s, 1] },
+          class_type: 'CLIPTextEncode',
+          _meta: { title: 'CLIP Text Encode (Prompt)' }
+        }
+      )
     end
 
     def build_negative_prompt_json(text:, clip_index:)
