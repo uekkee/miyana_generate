@@ -5,13 +5,7 @@ module Comfyui
         '3': ksampler_json,
         '4': checkpoint_json,
         '5': latent_image_json,
-        '6': {
-          inputs: {
-            text: 'masterpiece,best quality,amazing quality, 1girl, miyanabase, miyanakimono, looking at viewer, walking at beach', clip: [
-              '14', 1
-            ]
-          }, class_type: 'CLIPTextEncode', _meta: { title: 'CLIP Text Encode (Prompt)' }
-        },
+        '6': positive_prompt_json,
         '8': { inputs: { samples: ['3', 0], vae: ['4', 2] }, class_type: 'VAEDecode', _meta: { title: 'VAE Decode' } },
         '9': { inputs: { filename_prefix: 'miyana/results', images: ['8', 0] }, class_type: 'SaveImage',
                _meta: { title: 'Save Image' } },
@@ -54,6 +48,17 @@ module Comfyui
         inputs: { width: 1376, height: 1024, batch_size: 1 },
         class_type: 'EmptyLatentImage',
         _meta: { title: 'Empty Latent Image' }
+      }
+    end
+
+    def positive_prompt_json
+      {
+        inputs: {
+          text: 'masterpiece,best quality,amazing quality, 1girl, miyanabase, miyanakimono, looking at viewer, walking at beach',
+          clip: ['14', 1]
+        },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'CLIP Text Encode (Prompt)' }
       }
     end
   end
