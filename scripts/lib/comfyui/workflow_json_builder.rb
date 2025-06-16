@@ -5,7 +5,7 @@ module Comfyui
 
     attr_reader :checkpoint_node, :latent_image_node,
                 :negative_prompt_node, :load_lora_nodes, :positive_prompt_node,
-                :ksampler_node
+                :ksampler_node, :vae_decode_node
 
     def initialize
       @current_node_index = 3
@@ -26,6 +26,7 @@ module Comfyui
                           positive_index: 6, # FIXME: positive_index: positive_prompt_node.index,
                           negative_index: 11, # FIXME: negative_index: negative_prompt_node.index,
                           latent_image_index: 5) # FIXME: latent_image_index: latent_image_node.index)
+      build_vae_decode_node(sample_index: 3, vae_index: 4) # FIMME: sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
 
       # FIXME: changing node index will be removed finally
       latent_image_node.index = 5
@@ -34,13 +35,14 @@ module Comfyui
       load_lora_nodes.last.index = 14
       positive_prompt_node.index = 6
       ksampler_node.index = 3
+      vae_decode_node.index = 8
 
       {
         "#{ksampler_node.index}": ksampler_node.json,
         "#{checkpoint_node.index}": checkpoint_node.json,
         "#{latent_image_node.index}": latent_image_node.json,
         "#{positive_prompt_node.index}": positive_prompt_node.json,
-        '8': vae_decode_json,
+        "#{vae_decode_node.index}": vae_decode_node.json,
         '9': save_image_json,
         "#{negative_prompt_node.index}": negative_prompt_node.json,
         "#{load_lora_nodes.first.index}": load_lora_nodes.first.json,
@@ -109,12 +111,14 @@ module Comfyui
       )
     end
 
-    def vae_decode_json
-      {
-        inputs: { samples: ['3', 0], vae: ['4', 2] },
-        class_type: 'VAEDecode',
-        _meta: { title: 'VAE Decode' }
-      }
+    def build_vae_decode_node(sample_index:, vae_index:)
+      @vae_decode_node = assign_node(
+        {
+          inputs: { samples: [sample_index.to_s, 0], vae: [vae_index.to_s, 2] },
+          class_type: 'VAEDecode',
+          _meta: { title: 'VAE Decode' }
+        }
+      )
     end
 
     def save_image_json
