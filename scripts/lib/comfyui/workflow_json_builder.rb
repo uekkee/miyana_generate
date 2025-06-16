@@ -1,9 +1,20 @@
 module Comfyui
   class WorkflowJsonBuilder
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+
+    attr_reader :checkpoint_node
+
+    def initialize
+      @current_node_index = 3
+    end
+
     def base_json
+      build_checkpoint_node
+
       {
         '3': ksampler_json,
-        '4': checkpoint_json,
+        "#{checkpoint_node.index}": checkpoint_node.json,
         '5': latent_image_json,
         '6': positive_prompt_json,
         '8': vae_decode_json,
@@ -18,6 +29,12 @@ module Comfyui
 
     private
 
+    def assign_node(json)
+      @current_node_index += 1
+
+      WorkflowNode.new(index: @current_node_index, json:)
+    end
+
     def ksampler_json
       {
         inputs: {
@@ -29,12 +46,14 @@ module Comfyui
       }
     end
 
-    def checkpoint_json
-      {
-        inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' },
-        class_type: 'CheckpointLoaderSimple',
-        _meta: { title: 'Load Checkpoint' }
-      }
+    def build_checkpoint_node
+      @checkpoint_node = assign_node(
+        {
+          inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' },
+          class_type: 'CheckpointLoaderSimple',
+          _meta: { title: 'Load Checkpoint' }
+        }
+      )
     end
 
     def latent_image_json
@@ -91,6 +110,14 @@ module Comfyui
         },
         class_type: 'LoraLoader', _meta: { title: "Load LoRA - #{lora_name}" }
       }
+    end
+
+    class WorkflowNode
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+
+      attribute :index, :integer
+      attribute :json
     end
   end
 end
