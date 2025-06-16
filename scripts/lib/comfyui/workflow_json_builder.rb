@@ -7,8 +7,7 @@ module Comfyui
         '5': latent_image_json,
         '6': positive_prompt_json,
         '8': vae_decode_json,
-        '9': { inputs: { filename_prefix: 'miyana/results', images: ['8', 0] }, class_type: 'SaveImage',
-               _meta: { title: 'Save Image' } },
+        '9': save_image_json,
         '11': { inputs: { text: "bad quality,worst quality,worst detail,sketch,censor,\nnsfw", clip: ['4', 1] },
                 class_type: 'CLIPTextEncode', _meta: { title: 'CLIP Text Encode (Prompt)' } },
         '12': {
@@ -67,6 +66,14 @@ module Comfyui
         inputs: { samples: ['3', 0], vae: ['4', 2] },
         class_type: 'VAEDecode',
         _meta: { title: 'VAE Decode' }
+      }
+    end
+
+    def save_image_json
+      {
+        inputs: { filename_prefix: 'miyana/results', images: ['8', 0] },
+        class_type: 'SaveImage',
+        _meta: { title: 'Save Image' }
       }
     end
   end
