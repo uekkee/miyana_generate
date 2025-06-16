@@ -9,6 +9,7 @@ module Comfyui
 
     def initialize
       @current_node_index = 3
+      @last_model_node_index = 0
     end
 
     def base_json
@@ -23,7 +24,7 @@ module Comfyui
       nodes << build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
                                           clip_index: load_lora_nodes.last.index)
       nodes << build_ksampler_node(seed: rand(1000..999_999_999),
-                                   model_index: load_lora_nodes.last.index,
+                                   model_index: @last_model_node_index,
                                    positive_index: positive_prompt_node.index,
                                    negative_index: negative_prompt_node.index,
                                    latent_image_index: latent_image_node.index)
@@ -31,15 +32,16 @@ module Comfyui
       nodes << build_save_image_node(filename_prefix: 'miyana/results', image_index: vae_decode_node.index)
 
       {}.tap do |json|
-        nodes.flatten.each { |node| json[:"#{node.index}"] = node.json }
+        nodes.flatten.compact.each { |node| json[:"#{node.index}"] = node.json }
       end
     end
 
     private
 
-    def assign_node(json)
+    def assign_node(json, model_node: false)
       @current_node_index += 1
 
+      @last_model_node_index = @current_node_index if model_node
       WorkflowNode.new(index: @current_node_index, json:)
     end
 
@@ -62,7 +64,7 @@ module Comfyui
           inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' },
           class_type: 'CheckpointLoaderSimple',
           _meta: { title: 'Load Checkpoint' }
-        }
+        }, model_node: true
       )
     end
 
@@ -123,7 +125,8 @@ module Comfyui
         clip_index = last_load_lora_node ? last_load_lora_node.index : first_clip_index
 
         last_load_lora_node = assign_node(
-          load_lora_json(lora_name:, strength_model: 1, strength_clip: 1, model_index:, clip_index:)
+          load_lora_json(lora_name:, strength_model: 1, strength_clip: 1, model_index:, clip_index:),
+          model_node: true
         )
       end
     end
