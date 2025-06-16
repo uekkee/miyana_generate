@@ -2,10 +2,7 @@ module Comfyui
   class WorkflowJsonBuilder
     def base_json
       {
-        '3': {
-          inputs: { seed: rand(100..100_000), steps: 25, cfg: 7, sampler_name: 'dpmpp_2m', scheduler: 'karras', denoise: 1,
-                    model: ['14', 0], positive: ['6', 0], negative: ['11', 0], latent_image: ['5', 0] }, class_type: 'KSampler', _meta: { title: 'KSampler' }
-        },
+        '3': ksampler_json,
         '4': { inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' }, class_type: 'CheckpointLoaderSimple',
                _meta: { title: 'Load Checkpoint' } },
         '5': { inputs: { width: 1376, height: 1024, batch_size: 1 }, class_type: 'EmptyLatentImage',
@@ -30,6 +27,19 @@ module Comfyui
           inputs: { lora_name: 'miyanakimono_20250615_0702.safetensors', strength_model: 1, strength_clip: 1, model: ['12', 0],
                     clip: ['12', 1] }, class_type: 'LoraLoader', _meta: { title: 'Load LoRA' }
         }
+      }
+    end
+
+    private
+
+    def ksampler_json
+      {
+        inputs: {
+          seed: rand(100..100_000), steps: 25, cfg: 7, sampler_name: 'dpmpp_2m', scheduler: 'karras', denoise: 1,
+          model: ['14', 0], positive: ['6', 0], negative: ['11', 0], latent_image: ['5', 0]
+        },
+        class_type: 'KSampler',
+        _meta: { title: 'KSampler' }
       }
     end
   end
