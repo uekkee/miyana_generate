@@ -3,7 +3,8 @@ module Comfyui
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    attr_reader :checkpoint_node, :negative_prompt_node, :load_lora_nodes, :positive_prompt_node
+    attr_reader :checkpoint_node, :latent_image_node,
+                :negative_prompt_node, :load_lora_nodes, :positive_prompt_node
 
     def initialize
       @current_node_index = 3
@@ -11,6 +12,7 @@ module Comfyui
 
     def base_json
       build_checkpoint_node
+      build_latent_image_node(width: 1376, height: 1024, batch_size: 1)
       build_negative_prompt_json(text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw',
                                  clip_index: checkpoint_node.index)
       build_load_lora_nodes(lora_names: ['miyanabase_wai_part_try_250614_2038.safetensors',
@@ -20,6 +22,7 @@ module Comfyui
                                  clip_index: 14) # FIXME: clip_index: load_lora_nodes.last.index)
 
       # FIXME: changing node index will be removed finally
+      latent_image_node.index = 5
       negative_prompt_node.index = 11
       load_lora_nodes.first.index = 12
       load_lora_nodes.last.index = 14
@@ -28,7 +31,7 @@ module Comfyui
       {
         '3': ksampler_json,
         "#{checkpoint_node.index}": checkpoint_node.json,
-        '5': latent_image_json,
+        "#{latent_image_node.index}": latent_image_node.json,
         "#{positive_prompt_node.index}": positive_prompt_node.json,
         '8': vae_decode_json,
         '9': save_image_json,
@@ -67,12 +70,14 @@ module Comfyui
       )
     end
 
-    def latent_image_json
-      {
-        inputs: { width: 1376, height: 1024, batch_size: 1 },
-        class_type: 'EmptyLatentImage',
-        _meta: { title: 'Empty Latent Image' }
-      }
+    def build_latent_image_node(width:, height:, batch_size:)
+      @latent_image_node = assign_node(
+        {
+          inputs: { width:, height:, batch_size: },
+          class_type: 'EmptyLatentImage',
+          _meta: { title: 'Empty Latent Image' }
+        }
+      )
     end
 
     def build_positive_prompt_node(text:, clip_index:)
