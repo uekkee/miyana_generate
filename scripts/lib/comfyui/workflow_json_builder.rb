@@ -8,8 +8,7 @@ module Comfyui
         '6': positive_prompt_json,
         '8': vae_decode_json,
         '9': save_image_json,
-        '11': { inputs: { text: "bad quality,worst quality,worst detail,sketch,censor,\nnsfw", clip: ['4', 1] },
-                class_type: 'CLIPTextEncode', _meta: { title: 'CLIP Text Encode (Prompt)' } },
+        '11': negative_prompt_json,
         '12': {
           inputs: { lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors', strength_model: 1.0000000000000002,
                     strength_clip: 1, model: ['4', 0], clip: ['4', 1] }, class_type: 'LoraLoader', _meta: { title: 'Load LoRA' }
@@ -58,6 +57,14 @@ module Comfyui
         },
         class_type: 'CLIPTextEncode',
         _meta: { title: 'CLIP Text Encode (Prompt)' }
+      }
+    end
+
+    def negative_prompt_json
+      {
+        inputs: { text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw', clip: ['4', 1] },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'CLIP Text Encode (Negative Prompt)' }
       }
     end
 
