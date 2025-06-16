@@ -3,7 +3,7 @@ module Comfyui
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    attr_reader :checkpoint_node, :negative_prompt_node
+    attr_reader :checkpoint_node, :negative_prompt_node, :load_lora_nodes
 
     def initialize
       @current_node_index = 3
@@ -13,9 +13,14 @@ module Comfyui
       build_checkpoint_node
       build_negative_prompt_json(text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw',
                                  clip_index: checkpoint_node.index)
+      build_load_lora_nodes(lora_names: ['miyanabase_wai_part_try_250614_2038.safetensors',
+                                         'miyanakimono_20250615_0702.safetensors'],
+                            first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
 
       # FIXME: changing node index will be removed finally
       negative_prompt_node.index = 11
+      load_lora_nodes.first.index = 12
+      load_lora_nodes.last.index = 14
 
       {
         '3': ksampler_json,
@@ -25,10 +30,8 @@ module Comfyui
         '8': vae_decode_json,
         '9': save_image_json,
         "#{negative_prompt_node.index}": negative_prompt_node.json,
-        '12': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
-                             strength_model: 1, strength_clip: 1, model_index: 4, clip_index: 4),
-        '14': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
-                             strength_model: 1, strength_clip: 1, model_index: 12, clip_index: 12)
+        "#{load_lora_nodes.first.index}": load_lora_nodes.first.json,
+        "#{load_lora_nodes.last.index}": load_lora_nodes.last.json
       }
     end
 
@@ -106,14 +109,30 @@ module Comfyui
       }
     end
 
+    def build_load_lora_nodes(lora_names:, first_model_index:, first_clip_index:)
+      last_load_lora_node = nil
+
+      @load_lora_nodes = lora_names.map do |lora_name|
+        # FIXME: changing node index will be removed finally
+        # model_index = last_load_lora_node ? last_load_lora_node.index : first_model_index
+        # clip_index = last_load_lora_node ? last_load_lora_node.index : first_clip_index
+        model_index = last_load_lora_node ? 12 : first_model_index
+        clip_index = last_load_lora_node ? 12 : first_clip_index
+
+        last_load_lora_node = assign_node(
+          load_lora_json(lora_name:, strength_model: 1, strength_clip: 1, model_index:, clip_index:)
+        )
+      end
+    end
+
     def load_lora_json(lora_name:, strength_model:, strength_clip:, model_index:, clip_index:)
       {
         inputs: {
           lora_name:,
           strength_model:,
           strength_clip:,
-          model: ["#{model_index}", 0],
-          clip: ["#{clip_index}", 1]
+          model: [model_index.to_s, 0],
+          clip: [clip_index.to_s, 1]
         },
         class_type: 'LoraLoader', _meta: { title: "Load LoRA - #{lora_name}" }
       }
