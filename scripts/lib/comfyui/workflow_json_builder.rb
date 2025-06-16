@@ -4,7 +4,8 @@ module Comfyui
     include ActiveModel::Attributes
 
     attr_reader :checkpoint_node, :latent_image_node,
-                :negative_prompt_node, :load_lora_nodes, :positive_prompt_node
+                :negative_prompt_node, :load_lora_nodes, :positive_prompt_node,
+                :ksampler_node
 
     def initialize
       @current_node_index = 3
@@ -20,6 +21,11 @@ module Comfyui
                             first_model_index: checkpoint_node.index, first_clip_index: checkpoint_node.index)
       build_positive_prompt_node(text: "masterpiece,best quality,amazing quality,\n1girl, miyanabase, miyanakimono, looking at viewer, walking at beach",
                                  clip_index: 14) # FIXME: clip_index: load_lora_nodes.last.index)
+      build_ksampler_node(seed: rand(1000..999_999_999),
+                          model_index: 14, # FIXME: model_index: load_lora_nodes.last.index,
+                          positive_index: 6, # FIXME: positive_index: positive_prompt_node.index,
+                          negative_index: 11, # FIXME: negative_index: negative_prompt_node.index,
+                          latent_image_index: 5) # FIXME: latent_image_index: latent_image_node.index)
 
       # FIXME: changing node index will be removed finally
       latent_image_node.index = 5
@@ -27,9 +33,10 @@ module Comfyui
       load_lora_nodes.first.index = 12
       load_lora_nodes.last.index = 14
       positive_prompt_node.index = 6
+      ksampler_node.index = 3
 
       {
-        '3': ksampler_json,
+        "#{ksampler_node.index}": ksampler_node.json,
         "#{checkpoint_node.index}": checkpoint_node.json,
         "#{latent_image_node.index}": latent_image_node.json,
         "#{positive_prompt_node.index}": positive_prompt_node.json,
@@ -49,15 +56,17 @@ module Comfyui
       WorkflowNode.new(index: @current_node_index, json:)
     end
 
-    def ksampler_json
-      {
-        inputs: {
-          seed: rand(100..100_000), steps: 25, cfg: 7, sampler_name: 'dpmpp_2m', scheduler: 'karras', denoise: 1,
-          model: ['14', 0], positive: ['6', 0], negative: ['11', 0], latent_image: ['5', 0]
-        },
-        class_type: 'KSampler',
-        _meta: { title: 'KSampler' }
-      }
+    def build_ksampler_node(seed:, model_index:, positive_index:, negative_index:, latent_image_index:)
+      @ksampler_node = assign_node(
+        {
+          inputs: {
+            seed:, steps: 25, cfg: 7, sampler_name: 'dpmpp_2m', scheduler: 'karras', denoise: 1,
+            model: [model_index.to_s, 0], positive: [positive_index.to_s, 0], negative: [negative_index.to_s, 0],
+            latent_image: [latent_image_index.to_s, 0]
+          },
+          class_type: 'KSampler', _meta: { title: 'KSampler' }
+        }
+      )
     end
 
     def build_checkpoint_node
