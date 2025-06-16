@@ -9,14 +9,10 @@ module Comfyui
         '8': vae_decode_json,
         '9': save_image_json,
         '11': negative_prompt_json,
-        '12': {
-          inputs: { lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors', strength_model: 1.0000000000000002,
-                    strength_clip: 1, model: ['4', 0], clip: ['4', 1] }, class_type: 'LoraLoader', _meta: { title: 'Load LoRA' }
-        },
-        '14': {
-          inputs: { lora_name: 'miyanakimono_20250615_0702.safetensors', strength_model: 1, strength_clip: 1, model: ['12', 0],
-                    clip: ['12', 1] }, class_type: 'LoraLoader', _meta: { title: 'Load LoRA' }
-        }
+        '12': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
+                             strength_model: 1, strength_clip: 1, model_index: 4, clip_index: 4),
+        '14': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
+                             strength_model: 1, strength_clip: 1, model_index: 12, clip_index: 12)
       }
     end
 
@@ -81,6 +77,19 @@ module Comfyui
         inputs: { filename_prefix: 'miyana/results', images: ['8', 0] },
         class_type: 'SaveImage',
         _meta: { title: 'Save Image' }
+      }
+    end
+
+    def load_lora_json(lora_name:, strength_model:, strength_clip:, model_index:, clip_index:)
+      {
+        inputs: {
+          lora_name:,
+          strength_model:,
+          strength_clip:,
+          model: ["#{model_index}", 0],
+          clip: ["#{clip_index}", 1]
+        },
+        class_type: 'LoraLoader', _meta: { title: "Load LoRA - #{lora_name}" }
       }
     end
   end
