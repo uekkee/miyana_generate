@@ -5,7 +5,7 @@ module Comfyui
 
     attr_reader :checkpoint_node, :latent_image_node,
                 :negative_prompt_node, :load_lora_nodes, :positive_prompt_node,
-                :ksampler_node, :vae_decode_node
+                :ksampler_node, :vae_decode_node, :save_image_node
 
     def initialize
       @current_node_index = 3
@@ -27,6 +27,7 @@ module Comfyui
                           negative_index: 11, # FIXME: negative_index: negative_prompt_node.index,
                           latent_image_index: 5) # FIXME: latent_image_index: latent_image_node.index)
       build_vae_decode_node(sample_index: 3, vae_index: 4) # FIMME: sample_index: ksampler_node.index, vae_index: checkpoint_node.index)
+      build_save_image_node(filename_prefix: 'miyana/results', image_index: 8) # FIXME: image_index: vae_decode_node.index
 
       # FIXME: changing node index will be removed finally
       latent_image_node.index = 5
@@ -36,6 +37,7 @@ module Comfyui
       positive_prompt_node.index = 6
       ksampler_node.index = 3
       vae_decode_node.index = 8
+      save_image_node.index = 9
 
       {
         "#{ksampler_node.index}": ksampler_node.json,
@@ -43,7 +45,7 @@ module Comfyui
         "#{latent_image_node.index}": latent_image_node.json,
         "#{positive_prompt_node.index}": positive_prompt_node.json,
         "#{vae_decode_node.index}": vae_decode_node.json,
-        '9': save_image_json,
+        "#{save_image_node.index}": save_image_node.json,
         "#{negative_prompt_node.index}": negative_prompt_node.json,
         "#{load_lora_nodes.first.index}": load_lora_nodes.first.json,
         "#{load_lora_nodes.last.index}": load_lora_nodes.last.json
@@ -121,12 +123,13 @@ module Comfyui
       )
     end
 
-    def save_image_json
-      {
-        inputs: { filename_prefix: 'miyana/results', images: ['8', 0] },
-        class_type: 'SaveImage',
-        _meta: { title: 'Save Image' }
-      }
+    def build_save_image_node(filename_prefix:, image_index:)
+      @save_image_node = assign_node(
+        {
+          inputs: { filename_prefix:, images: [image_index.to_s, 0] },
+          class_type: 'SaveImage', _meta: { title: 'Save Image' }
+        }
+      )
     end
 
     def build_load_lora_nodes(lora_names:, first_model_index:, first_clip_index:)
