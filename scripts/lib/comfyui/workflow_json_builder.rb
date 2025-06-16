@@ -4,8 +4,7 @@ module Comfyui
       {
         '3': ksampler_json,
         '4': checkpoint_json,
-        '5': { inputs: { width: 1376, height: 1024, batch_size: 1 }, class_type: 'EmptyLatentImage',
-               _meta: { title: 'Empty Latent Image' } },
+        '5': latent_image_json,
         '6': {
           inputs: {
             text: 'masterpiece,best quality,amazing quality, 1girl, miyanabase, miyanakimono, looking at viewer, walking at beach', clip: [
@@ -47,6 +46,14 @@ module Comfyui
         inputs: { ckpt_name: 'waiNSFWIllustrious_v140.safetensors' },
         class_type: 'CheckpointLoaderSimple',
         _meta: { title: 'Load Checkpoint' }
+      }
+    end
+
+    def latent_image_json
+      {
+        inputs: { width: 1376, height: 1024, batch_size: 1 },
+        class_type: 'EmptyLatentImage',
+        _meta: { title: 'Empty Latent Image' }
       }
     end
   end
