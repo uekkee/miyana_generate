@@ -3,7 +3,7 @@ module Comfyui
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    attr_reader :checkpoint_node
+    attr_reader :checkpoint_node, :negative_prompt_node
 
     def initialize
       @current_node_index = 3
@@ -11,6 +11,11 @@ module Comfyui
 
     def base_json
       build_checkpoint_node
+      build_negative_prompt_json(text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw',
+                                 clip_index: checkpoint_node.index)
+
+      # FIXME: changing node index will be removed finally
+      negative_prompt_node.index = 11
 
       {
         '3': ksampler_json,
@@ -19,7 +24,7 @@ module Comfyui
         '6': positive_prompt_json,
         '8': vae_decode_json,
         '9': save_image_json,
-        '11': negative_prompt_json,
+        "#{negative_prompt_node.index}": negative_prompt_node.json,
         '12': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
                              strength_model: 1, strength_clip: 1, model_index: 4, clip_index: 4),
         '14': load_lora_json(lora_name: 'miyanabase_wai_part_try_250614_2038.safetensors',
@@ -75,12 +80,14 @@ module Comfyui
       }
     end
 
-    def negative_prompt_json
-      {
-        inputs: { text: 'bad quality,worst quality,worst detail,sketch,censor,nsfw', clip: ['4', 1] },
-        class_type: 'CLIPTextEncode',
-        _meta: { title: 'CLIP Text Encode (Negative Prompt)' }
-      }
+    def build_negative_prompt_json(text:, clip_index:)
+      @negative_prompt_node = assign_node(
+        {
+          inputs: { text:, clip: [clip_index.to_s, 1] },
+          class_type: 'CLIPTextEncode',
+          _meta: { title: 'CLIP Text Encode (Negative Prompt)' }
+        }
+      )
     end
 
     def vae_decode_json
